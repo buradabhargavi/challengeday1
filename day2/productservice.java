@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Year;
+import java.util.stream.Stream;
 public class productservice {
     List <product> things= new ArrayList<>();
 
@@ -50,11 +52,22 @@ public class productservice {
 }
 public List<product>  getExpiredProduct(){
     List <product> expired = new ArrayList<>();
+    Year curyear = Year.now();
+    int yearValue = curyear.getValue();
     for(product e:things){
-        if(e.getWarrenty()<2023){
+        if(e.getWarrenty()<yearValue){
             expired.add(e);
         }
 }
 return expired;
 }
 }
+
+
+
+
+
+
+
+
+
