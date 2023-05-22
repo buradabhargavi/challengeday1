@@ -12,54 +12,39 @@ public class productservice {
          return things; 
     }
     public product getParticularProduct(String name){
-        for(product p:things){
-            if(p.getName().equals(name)){
-                return p;
-            }
+        return things.stream()
+        .filter(p->p.getName().equals(name))
+        .findFirst()
+        .orElse(null);
         }
-            return null;
         
-
-    }
 
    public List<product>  getProductWithText(String text){
     String str = text.toLowerCase();
-        List <product> prods = new ArrayList<>();
-        for(product p: things){
-            String name=p.getName().toLowerCase();
-            String type=p.getType().toLowerCase();
-            String place=p.getPlace().toLowerCase();
-         if(name.contains(text) || type.contains(text) ||place.contains(text)){
-            prods.add(p);
-         }
-         
-        }
-        return prods;
+        return things.stream()
+    .filter(p->p.getName().toLowerCase().contains(str)||
+               p.getType().toLowerCase().contains(str) ||
+               p.getPlace().toLowerCase().contains(str) )
+     .toList();  
+   
         
    }
    public List<product>  getProductWithPlace(String place){
     String str = place.toLowerCase();
-        List <product> belongings = new ArrayList<>();
-        
-            
-            for(product b:things){
-                if(b.getPlace().equals(place)){
-                    belongings.add(b);
-                }
+       
+           return things.stream()
+                .filter(b -> b.getPlace().equals(place))
+                .toList();
+}
+                
  
-   }
-   return belongings;
-}
+  
 public List<product>  getExpiredProduct(){
-    List <product> expired = new ArrayList<>();
-    Year curyear = Year.now();
+   Year curyear = Year.now();
     int yearValue = curyear.getValue();
-    for(product e:things){
-        if(e.getWarrenty()<yearValue){
-            expired.add(e);
-        }
-}
-return expired;
+    return things.stream()
+    .filter(e -> e.getWarrenty() < yearValue)
+    .toList();
 }
 }
 
